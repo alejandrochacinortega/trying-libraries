@@ -15,6 +15,8 @@ import {
   RowActions1,
   SwipeableCard,
 } from './src/components/interactable';
+import BasicExample from './src/components/lottie/example';
+
 
 
 export default class tryingLibraries extends Component {
@@ -31,6 +33,7 @@ export default class tryingLibraries extends Component {
       <View>
         <Header headerText="Libraries"/>
         <ScrollView>
+          <BasicExample/>
           <Card cardName="Row iOS">
             <CardSection>
               <RowActions2/>

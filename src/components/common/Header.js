@@ -9,7 +9,7 @@ const Header = ({headerText}) => {
   
   return (
     <View style={viewStyle}>
-      <Text style={textStyle}>{headerText} work</Text>
+      <Text style={textStyle}>{headerText}</Text>
     </View>
   )
 };
