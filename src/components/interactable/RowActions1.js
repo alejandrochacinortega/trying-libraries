@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Image, Text, Animated, TouchableOpacity, Dimensions, Slider } from 'react-native';
+import { StyleSheet, View, Text, Animated, TouchableOpacity, Slider, Dimensions } from 'react-native';
 import Interactable from 'react-native-interactable';
 
 const Screen = Dimensions.get('window');
 
-class RowActions2 extends Component {
+class RowActions1 extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      damping: 1-0.7,
+      damping: 1-0.6,
       tension: 300
     };
   }
   render() {
     return (
       <View style={styles.container}>
-        
+
         <Row damping={this.state.damping} tension={this.state.tension}>
           <View style={styles.rowContent}>
             <View style={styles.rowIcon} />
@@ -43,7 +43,7 @@ class RowActions2 extends Component {
             </View>
           </View>
         </Row>
-        
+
         <View style={styles.playground}>
           <Text style={styles.playgroundLabel}>Change spring damping:</Text>
           <Slider
@@ -70,7 +70,7 @@ class RowActions2 extends Component {
             onSlidingComplete={(value) => this.setState({tension: value})}
           />
         </View>
-      
+
       </View>
     );
   }
@@ -83,71 +83,88 @@ class Row extends Component {
   }
   render() {
     return (
-      <View style={{backgroundColor: '#ceced2'}}>
-        
-        <View style={{position: 'absolute', left: 0, right: 0, height: 75}} pointerEvents='box-none'>
-          <Animated.View style={
-            [styles.trashHolder, {
-              transform: [{
-                translateX: this._deltaX.interpolate({
-                  inputRange: [-155, 0],
-                  outputRange: [0, 155]
-                })
-              }]
-            }
-          ]}>
-            <TouchableOpacity onPress={this.onButtonPress.bind(this, 'trash')} style={styles.button}>
-              <Image style={styles.button} source={require('../../img/icon-trash.png')} />
-            </TouchableOpacity>
-          </Animated.View>
-          
-          <Animated.View style={
-            [styles.snoozeHolder, {
-              transform: [{
-                translateX: this._deltaX.interpolate({
-                  inputRange: [-155, 0],
-                  outputRange: [0, 78]
-                })
-              }]
-            }
-            ]}>
-            <TouchableOpacity onPress={this.onButtonPress.bind(this, 'snooze')} style={styles.button}>
-              <Image style={styles.button} source={require('../../img/icon-clock.png')} />
-            </TouchableOpacity>
-          </Animated.View>
+      <View style={{backgroundColor: '#de6d77'}}>
+
+        <View style={{position: 'absolute', right: 0, height: 75, flexDirection: 'row', alignItems: 'center'}}>
+          <TouchableOpacity onPress={this.onButtonPress.bind(this, 'trash')}>
+            <Animated.Image source={require('../../img/icon-trash.png')} style={
+              [styles.buttonRight, {
+                opacity: this._deltaX.interpolate({
+                  inputRange: [-155, -115],
+                  outputRange: [1, 0],
+                  extrapolateLeft: 'clamp',
+                  extrapolateRight: 'clamp'
+                }),
+                transform: [{
+                  scale: this._deltaX.interpolate({
+                    inputRange: [-155, -115],
+                    outputRange: [1, 0.7],
+                    extrapolateLeft: 'clamp',
+                    extrapolateRight: 'clamp'
+                  })
+                }]
+              }
+            ]} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.onButtonPress.bind(this, 'snooze')}>
+            <Animated.Image source={require('../../img/icon-clock.png')} style={
+              [styles.buttonRight, {
+                opacity: this._deltaX.interpolate({
+                  inputRange: [-90, -50],
+                  outputRange: [1, 0],
+                  extrapolateLeft: 'clamp',
+                  extrapolateRight: 'clamp'
+                }),
+                transform: [{
+                  scale: this._deltaX.interpolate({
+                    inputRange: [-90, -50],
+                    outputRange: [1, 0.7],
+                    extrapolateLeft: 'clamp',
+                    extrapolateRight: 'clamp'
+                  })
+                }]
+              }
+            ]} />
+          </TouchableOpacity>
         </View>
-        
-        <View style={{position: 'absolute', left: 0, right: 0, height: 75}} pointerEvents='box-none'>
-          
-          <Animated.View style={
-            [styles.doneHolder, {
-              transform: [{
-                translateX: this._deltaX.interpolate({
-                  inputRange: [0, 78],
-                  outputRange: [-78, 0]
-                })
-              }]
-            }
-            ]}>
-            <TouchableOpacity onPress={this.onButtonPress.bind(this, 'done')} style={styles.button}>
-              <Image style={styles.button} source={require('../../img/icon-check.png')} />
-            </TouchableOpacity>
-          </Animated.View>
+
+        <View style={{position: 'absolute', left: 0, height: 75, flexDirection: 'row', alignItems: 'center'}}>
+          <TouchableOpacity onPress={this.onButtonPress.bind(this, 'done')}>
+            <Animated.Image source={require('../../img/icon-check.png')} style={
+              [styles.buttonLeft, {
+                opacity: this._deltaX.interpolate({
+                  inputRange: [50, 90],
+                  outputRange: [0, 1],
+                  extrapolateLeft: 'clamp',
+                  extrapolateRight: 'clamp'
+                }),
+                transform: [{
+                  scale: this._deltaX.interpolate({
+                    inputRange: [50, 90],
+                    outputRange: [0.7, 1],
+                    extrapolateLeft: 'clamp',
+                    extrapolateRight: 'clamp'
+                  })
+                }]
+              }
+            ]} />
+          </TouchableOpacity>
         </View>
-        
+
         <Interactable.View
           horizontalOnly={true}
           snapPoints={[
-            {x: 78, damping: 1-this.props.damping, tension: this.props.tension},
+            {x: 90, damping: 1-this.props.damping, tension: this.props.tension},
             {x: 0, damping: 1-this.props.damping, tension: this.props.tension},
             {x: -155, damping: 1-this.props.damping, tension: this.props.tension}
           ]}
+          dragToss={0.01}
           animatedValueX={this._deltaX}>
           <View style={{left: 0, right: 0, height: 75, backgroundColor: 'white'}}>
             {this.props.children}
           </View>
         </Interactable.View>
-      
+
       </View>
     );
   }
@@ -183,40 +200,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'gray'
   },
-  button: {
+  buttonRight: {
     width: 40,
-    height: 40
+    height: 40,
+    marginRight: 25
   },
-  trashHolder: {
-    position: 'absolute',
-    top: 0,
-    left: Screen.width - 155,
-    width: Screen.width,
-    height: 75,
-    paddingLeft: 18,
-    backgroundColor: '#f8a024',
-    justifyContent: 'center'
-  },
-  snoozeHolder: {
-    position: 'absolute',
-    top: 0,
-    left: Screen.width - 78,
-    width: Screen.width,
-    height: 75,
-    paddingLeft: 18,
-    backgroundColor: '#4f7db0',
-    justifyContent: 'center'
-  },
-  doneHolder: {
-    position: 'absolute',
-    top: 0,
-    right: Screen.width - 78,
-    width: Screen.width,
-    height: 75,
-    paddingRight: 18,
-    backgroundColor: '#2f9a5d',
-    justifyContent: 'center',
-    alignItems: 'flex-end'
+  buttonLeft: {
+    width: 40,
+    height: 40,
+    marginLeft: 25
   },
   playground: {
     marginTop: Screen.height <= 500 ? 0 : 80,
@@ -237,4 +229,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export { RowActions2 };
+export { RowActions1 };

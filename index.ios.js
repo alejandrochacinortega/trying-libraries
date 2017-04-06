@@ -5,9 +5,16 @@ import {
   AppRegistry,
   Text
 } from 'react-native';
-import Header from './src/components/Header';
-import { RowActions2 } from './src/components/interactable';
-
+import {
+  Header,
+  Card,
+  CardSection,
+} from './src/components/common';
+import {
+  RowActions2,
+  RowActions1,
+  SwipeableCard,
+} from './src/components/interactable';
 
 
 export default class tryingLibraries extends Component {
@@ -24,9 +31,21 @@ export default class tryingLibraries extends Component {
       <View>
         <Header headerText="Libraries"/>
         <ScrollView>
-          <View>
-            <RowActions2/>
-          </View>
+          <Card cardName="Row iOS">
+            <CardSection>
+              <RowActions2/>
+            </CardSection>
+          </Card>
+          <Card cardName="Row Android">
+            <CardSection>
+              <RowActions1/>
+            </CardSection>
+          </Card>
+          <Card cardName="Swipeable cards">
+            <CardSection>
+              <SwipeableCard/>
+            </CardSection>
+          </Card>
         </ScrollView>
       </View>
     )
