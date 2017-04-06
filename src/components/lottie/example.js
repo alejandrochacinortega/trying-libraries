@@ -33,23 +33,35 @@
 
 
 import React from 'react';
+import { View, } from 'react-native';
 import Animation from 'lottie-react-native';
+import { Button } from '../common';
 
 export default class BasicExample extends React.Component {
   componentDidMount() {
-    this.animation.play();
+    console.log(' mounted 2 ', this.animation);
+    // this.animation.play();
   }
   
   render() {
     return (
-      <Animation
-        ref={animation => { this.animation = animation; }}
-        style={{
+      <View>
+        <Animation
+          ref={animation => { this.animation = animation; }}
+          style={{
           width: 200,
           height: 200,
         }}
-        source={require('./animations/LineAnimation.json')}
-      />
-    );
+          source={require('./animations/LineAnimation.json')}
+        />
+        <Button onPress={() => this.animation.play()}>
+          Start
+        </Button>
+        <Button onPress={() => this.animation.reset()}>
+          Pause
+        </Button>
+      </View>
+    )
   }
 }
+      
